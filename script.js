@@ -18,7 +18,7 @@ function horarioPermitido() {
   const hora = ahora.getHours();
   const minuto = ahora.getMinutes();
 
-  return 1;
+  return true;
   //return hora === 6 && minuto >= 0 && minuto <= 50;
 }
 
