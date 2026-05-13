@@ -18,7 +18,8 @@ function horarioPermitido() {
   const hora = ahora.getHours();
   const minuto = ahora.getMinutes();
 
-  return hora === 6 && minuto >= 0 && minuto <= 50;
+  return 1;
+  //return hora === 6 && minuto >= 0 && minuto <= 50;
 }
 
 function reservar(material) {
