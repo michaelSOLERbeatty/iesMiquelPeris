@@ -18,12 +18,11 @@ function horarioPermitido() {
   const hora = ahora.getHours();
   const minuto = ahora.getMinutes();
 
-  return true;
-  //return hora === 6 && minuto >= 0 && minuto <= 50;
+  return hora === 8 && minuto >= 0 && minuto <= 20;
 }
 
 function reservar(material) {
-  if (!horarioPermitido()) {
+  if (false){ //!horarioPermitido()) {
     alert('Solo se puede reservar entre las 08:00 y las 08:20');
     return;
   }
