@@ -43,7 +43,8 @@ function horarioPermitido() {
 
   const minuto = ahora.getMinutes();
 
-  return hora === 8 && minuto >= 0 && minuto <= 20;
+  return true;
+  //return hora === 8 && minuto >= 0 && minuto <= 20;
 }
 
 
@@ -60,7 +61,7 @@ window.reservar = async function(material) {
 
   if (!nombre || nombre.trim() === '') {
 
-    alert('Debes introducir un nombre válido');
+    alert('Debes introducir un nombre vÃ¡lido');
 
     return;
   }
@@ -77,7 +78,7 @@ window.reservar = async function(material) {
 
   if (!resultado.empty) {
 
-    alert('Solo se permite una reserva por persona al día');
+    alert('Solo se permite una reserva por persona al dÃ­a');
 
     return;
   }
