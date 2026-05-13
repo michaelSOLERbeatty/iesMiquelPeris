@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserva Material Deportivo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>Reserva de Material Deportivo</h1>
+
+    <p class="info">
+      Las reservas solo pueden hacerse entre las 08:00 y las 08:20.
+    </p>
+
+    <div class="materiales">
+      <div class="card">
+        <h2>Pelota de fútbol ⚽</h2>
+        <button onclick="reservar('Pelota de fútbol ⚽')">
+          Reservar
+        </button>
+      </div>
+
+      <div class="card">
+        <h2>Pelota de baloncesto 🏀</h2>
+        <button onclick="reservar('Pelota de baloncesto 🏀')">
+          Reservar
+        </button>
+      </div>
+
+      <div class="card">
+        <h2>Pelota de ping pong 🏓</h2>
+        <button onclick="reservar('Pelota de ping pong 🏓')">
+          Reservar
+        </button>
+      </div>
+    </div>
+
+    <div class="reservas">
+      <h2>Reservas actuales</h2>
+      <div id="lista-reservas"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
