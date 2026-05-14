@@ -51,7 +51,7 @@ function horarioPermitido() {
 
   return true;
   
-  //return hora === 8 && minuto >= 0 && minuto <= 20;
+  //return hora === 8 && minuto >= 0 && minuto <= 15;
 }
 
 
@@ -59,7 +59,7 @@ window.reservar = async function(material) {
 
   if (!horarioPermitido()) {
 
-    alert('Solo se puede reservar entre las 08:00 y las 08:20');
+    alert('Solo se puede reservar entre las 08:00 y las 08:15');
 
     return;
   }
