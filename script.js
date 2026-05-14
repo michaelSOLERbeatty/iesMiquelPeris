@@ -45,8 +45,8 @@ function horarioPermitido() {
 
   const minuto = ahora.getMinutes();
 
-
   return true;
+  
   //return hora === 8 && minuto >= 0 && minuto <= 20;
 }
 
