@@ -1,3 +1,6 @@
+
+
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -26,6 +29,7 @@ const firebaseConfig = {
 };
 
 
+
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
@@ -45,9 +49,7 @@ function horarioPermitido() {
 
   const minuto = ahora.getMinutes();
 
-  return true;
-  
-  //return hora === 8 && minuto >= 0 && minuto <= 20;
+  return hora === 8 && minuto >= 0 && minuto <= 20;
 }
 
 
