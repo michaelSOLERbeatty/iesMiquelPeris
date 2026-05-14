@@ -80,19 +80,38 @@ window.reservar = async function(material) {
 
   const reservasRef = collection(db, 'reservas');
 
-  const consulta = query(
+  // COMPROBAR SI YA RESERVÓ
+  const consultaUsuario = query(
     reservasRef,
     where('nombre', '==', nombre.toLowerCase()),
     where('fecha', '==', hoy)
   );
 
-  const resultado = await getDocs(consulta);
+  const resultadoUsuario = await getDocs(consultaUsuario);
 
-  if (!resultado.empty) {
+  if (!resultadoUsuario.empty) {
 
     alert('Solo se permite una reserva por persona al día');
 
     return;
+  }
+
+  // OBTENER ÚLTIMO ORDEN
+  const consultaOrden = query(
+    reservasRef,
+    where('fecha', '==', hoy),
+    orderBy('orden', 'desc')
+  );
+
+  const ultimoResultado = await getDocs(consultaOrden);
+
+  let nuevoOrden = 1;
+
+  if (!ultimoResultado.empty) {
+
+    const ultimaReserva = ultimoResultado.docs[0].data();
+
+    nuevoOrden = ultimaReserva.orden + 1;
   }
 
   // GUARDAR RESERVA
@@ -102,7 +121,7 @@ window.reservar = async function(material) {
     material,
     hora: new Date().toLocaleTimeString(),
     fecha: hoy,
-    timestamp: Date.now()
+    orden: nuevoOrden
   });
 
   mostrarReservas();
@@ -120,7 +139,7 @@ async function mostrarReservas() {
   const consulta = query(
     reservasRef,
     where('fecha', '==', hoy),
-    orderBy('timestamp', 'asc')
+    orderBy('orden', 'asc')
   );
 
   const resultado = await getDocs(consulta);
@@ -132,8 +151,6 @@ async function mostrarReservas() {
     return;
   }
 
-  let contador = 1;
-
   resultado.forEach((documento) => {
 
     const reserva = documento.data();
@@ -144,7 +161,7 @@ async function mostrarReservas() {
 
     div.innerHTML = `
       <div>
-        <strong>${contador}. ${reserva.material}</strong><br>
+        <strong>${reserva.orden}. ${reserva.material}</strong><br>
         Nombre: ${reserva.nombre}<br>
         Curso: ${reserva.curso}
       </div>
@@ -155,8 +172,6 @@ async function mostrarReservas() {
     `;
 
     contenedor.appendChild(div);
-
-    contador++;
   });
 }
 
