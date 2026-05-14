@@ -20,8 +20,8 @@ const firebaseConfig = {
   projectId: "iesmiquelperis-88467",
   storageBucket: "iesmiquelperis-88467.firebasestorage.app",
   messagingSenderId: "186900110075",
-  appId: "1:186900110075:web:4bdcbef58f7b116a49ae5e",
-  measurementId: "G-T70T6DT5PB"
+  appId: "1:186900110075:web:06e9ef086abaa7bf49ae5e",
+  measurementId: "G-9DP759ZDPX"
 };
 
 
@@ -35,6 +35,7 @@ mostrarReservas();
 
 resetDiario();
 
+
 function horarioPermitido() {
 
   const ahora = new Date();
@@ -43,8 +44,7 @@ function horarioPermitido() {
 
   const minuto = ahora.getMinutes();
 
-  return true;
-  //return hora === 8 && minuto >= 0 && minuto <= 20;
+  return hora === 8 && minuto >= 0 && minuto <= 20;
 }
 
 
@@ -57,11 +57,22 @@ window.reservar = async function(material) {
     return;
   }
 
+  // NOMBRE
   const nombre = prompt('Introduce tu nombre');
 
   if (!nombre || nombre.trim() === '') {
 
     alert('Debes introducir un nombre válido');
+
+    return;
+  }
+
+  // CURSO
+  const curso = prompt('Introduce tu curso');
+
+  if (!curso || curso.trim() === '') {
+
+    alert('Debes introducir un curso válido');
 
     return;
   }
@@ -83,11 +94,14 @@ window.reservar = async function(material) {
     return;
   }
 
+  // GUARDAR RESERVA
   await addDoc(reservasRef, {
     nombre: nombre.toLowerCase(),
+    curso,
     material,
     hora: new Date().toLocaleTimeString(),
-    fecha: hoy
+    fecha: hoy,
+    timestamp: Date.now()
   });
 
   mostrarReservas();
@@ -104,7 +118,8 @@ async function mostrarReservas() {
 
   const consulta = query(
     reservasRef,
-    where('fecha', '==', hoy)
+    where('fecha', '==', hoy),
+    orderBy('timestamp', 'asc')
   );
 
   const resultado = await getDocs(consulta);
@@ -116,6 +131,8 @@ async function mostrarReservas() {
     return;
   }
 
+  let contador = 1;
+
   resultado.forEach((documento) => {
 
     const reserva = documento.data();
@@ -126,8 +143,9 @@ async function mostrarReservas() {
 
     div.innerHTML = `
       <div>
-        <strong>${reserva.material}</strong><br>
-        Reservado por: ${reserva.nombre}
+        <strong>${contador}. ${reserva.material}</strong><br>
+        Nombre: ${reserva.nombre}<br>
+        Curso: ${reserva.curso}
       </div>
 
       <div>
@@ -136,6 +154,8 @@ async function mostrarReservas() {
     `;
 
     contenedor.appendChild(div);
+
+    contador++;
   });
 }
 
