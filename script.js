@@ -1,6 +1,3 @@
-
-
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -29,7 +26,6 @@ const firebaseConfig = {
 };
 
 
-
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
@@ -50,8 +46,8 @@ function horarioPermitido() {
   const minuto = ahora.getMinutes();
 
   return true;
-  
-  //return hora === 8 && minuto >= 0 && minuto <= 15;
+
+  //return hora === 7 && minuto >= 0 && minuto <= 59;
 }
 
 
@@ -59,7 +55,7 @@ window.reservar = async function(material) {
 
   if (!horarioPermitido()) {
 
-    alert('Solo se puede reservar entre las 08:00 y las 08:15');
+    alert('Solo se puede reservar entre las 07:00 y las 08:00');
 
     return;
   }
@@ -172,13 +168,62 @@ async function mostrarReservas() {
         Curso: ${reserva.curso}
       </div>
 
-      <div>
-        ${reserva.hora}
+      <div class="acciones">
+
+        <div>${reserva.hora}</div>
+
+        <button class="incidencia-btn">
+          Incidencia
+        </button>
+
       </div>
     `;
 
+    const boton = div.querySelector('.incidencia-btn');
+
+    boton.addEventListener('click', () => {
+      enviarIncidencia(reserva);
+    });
+
     contenedor.appendChild(div);
   });
+}
+
+
+window.enviarIncidencia = async function(reserva) {
+
+  const texto = `
+INCIDENCIA RESERVA MATERIAL
+
+Nombre: ${reserva.nombre}
+Curso: ${reserva.curso}
+Material: ${reserva.material}
+Fecha: ${reserva.fecha}
+Hora: ${reserva.hora}
+`;
+
+  // COPIAR AL PORTAPAPELES
+  await navigator.clipboard.writeText(texto);
+
+  // COMPARTIR EN ANDROID
+  if (navigator.share) {
+
+    try {
+
+      await navigator.share({
+        title: 'Incidencia reserva',
+        text: texto
+      });
+
+    } catch (error) {
+
+      console.log(error);
+    }
+
+  } else {
+
+    alert('Información copiada al portapapeles');
+  }
 }
 
 

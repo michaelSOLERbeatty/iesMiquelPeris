@@ -14,15 +14,12 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-
-
-
 h1 {
   text-align: center;
 }
 
 .logo {
-  width: 30px;
+  width: 90px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -75,4 +72,22 @@ button:hover {
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.incidencia-btn {
+  background-color: #dc2626;
+  font-size: 14px;
+  padding: 8px 12px;
+}
+
+.incidencia-btn:hover {
+  background-color: #b91c1c;
 }
